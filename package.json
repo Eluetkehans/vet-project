@@ -1,0 +1,23 @@
+{
+  "name": "vet-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eluetkehans/vet-project.git"
+  },
+  "author": "Erik Luetkehas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Eluetkehans/vet-project/issues"
+  },
+  "homepage": "https://github.com/Eluetkehans/vet-project#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "mongoose": "^4.2.7"
+  }
+}

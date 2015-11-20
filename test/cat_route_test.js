@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 process.env.MONGO_URL = 'mongodb://localhost/pet_test';
 
 // Pull in our models
-var Pet = require(__dirname + '/models/pet');
+var Pet = require(__dirname + '/../models/pet');
 
 // set beggining of URL for later convenience
 var url = '/localhost:3000/api';

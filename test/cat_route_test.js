@@ -11,7 +11,7 @@ process.env.MONGO_URL = 'mongodb://localhost/pet_test';
 var Pet = require(__dirname + '/../models/pet');
 
 // set beggining of URL for later convenience
-var url = '/localhost:3000/api';
+var url = 'localhost:3000/api';
 
 // require in our server so it auto-runs when this test is run.
 require(__dirname + '/../server');

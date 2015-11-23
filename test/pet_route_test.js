@@ -11,7 +11,7 @@ process.env.MONGO_URL = 'mongodb://localhost/pet_test';
 var Pet = require(__dirname + '/../models/pet');
 
 // set beggining of URL for later convenience
-var url = '/localhost:3000/api';
+var url = 'localhost:3000/api';
 
 // require in our server so it auto-runs when this test is run.
 require(__dirname + '/../server');
@@ -29,5 +29,24 @@ describe('Pet routes', function() {
       if (err) throw err;
       done();
     });
+  });
+
+  after(function(done) {
+    // drop database after test to make sure we start from a clean slate
+    // every time we test
+    mongoose.connection.db.dropDatabase(function(err) {
+      if(err) throw err;
+      done();
+    });
+  });
+
+  it('should get a list of pets on get request', function(done) {
+    chai.request(url)
+      .get('/pets')
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res.body.pets[0].name).to.eql('fluffy, destroyer of worlds');
+        done();
+      });
   });
 });

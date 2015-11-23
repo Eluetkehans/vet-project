@@ -19,12 +19,14 @@ require(__dirname + '/../server');
 describe('Pet routes', function() {
   // Because we make a new Pet to search every time we run a test session
   // we need a spot to save the semi-randomly generated _id to use later
-  // in searches.
+  // in searches. Same with delete and update.
 
   var searchId;
+  var deleteId;
+  var updateId;
 
+//add pet objects into our database for our test to interact with
   before(function(done) {
-    //add pet objects into our database for our test to interact with
     var searchPet = new Pet();
     searchPet.name = 'fluffy, destroyer of worlds';
     searchPet.type = 'cat';
@@ -35,6 +37,36 @@ describe('Pet routes', function() {
       if (err) throw err;
       // set what id to search for before the tests are run.
       searchId = doc._id;
+      done();
+    });
+  });
+
+  before(function(done) {
+    var deletePet = new Pet();
+    deletePet.name = 'Pickles, the seathing mass';
+    deletePet.type = 'cat';
+    deletePet.size = 'medium';
+    deletePet.gender = 'male';
+    deletePet.color = 'orange';
+    deletePet.save(function(err, doc) {
+      if (err) throw err;
+      // set what id to search for before the tests are run.
+      deleteId = doc._id;
+      done();
+    });
+  });
+
+  before(function(done) {
+    var updatePet = new Pet();
+    updatePet.name = 'Humphrey, keeper of secrets';
+    updatePet.type = 'dog';
+    updatePet.size = 'small';
+    updatePet.gender = 'male';
+    updatePet.color = 'tan';
+    updatePet.save(function(err, doc) {
+      if (err) throw err;
+      // set what id to search for before the tests are run.
+      updateId = doc._id;
       done();
     });
   });
@@ -53,7 +85,8 @@ describe('Pet routes', function() {
       .get('/pets')
       .end(function(err, res) {
         expect(err).to.eql(null);
-        expect(res.body.pets[0].name).to.eql('fluffy, destroyer of worlds');
+        // We just want to check that it is not empty.
+        expect(res.body.pets[0]).to.not.eql(undefined);
         done();
       });
   });
@@ -88,6 +121,42 @@ describe('Pet routes', function() {
         expect(err).to.eql(null);
         expect(res.body.pets[0].name).to.eql('fluffy, destroyer of worlds');
         done();
+      });
+  });
+
+  it('should delete a pet by id', function(done) {
+    chai.request(url)
+      .delete('/pets/' + deleteId)
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        // We want find() to give us an empty array, because the pet with
+        // deleteId should no longer exist.
+        Pet.find({_id: deleteId}, function(err, docs) {
+          if(err) throw err;
+          expect(docs.length).to.eql(0);
+          done();
+        });
+      });
+  });
+
+  it('should update a pet by id', function(done) {
+    var updateData = {
+                      "updateData": {
+                                      "color": "black",
+                                      "size": "medium"
+                                    }
+
+                     };
+    chai.request(url)
+      .put('/pets/' + updateId)
+      .send(updateData)
+      .end(function(err, res) {
+        Pet.findOne({_id: updateId}, function(err, doc) {
+          expect(err).to.eql(null);
+          expect(doc.color).to.eql("blac");
+          expect(doc.size).to.eql("mediu");
+          done();
+        });
       });
   });
 

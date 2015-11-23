@@ -30,6 +30,7 @@ petsRoute.get('/pets/:id', function(req, res) {
 });
 
 petsRoute.post('/pets', jsonParser, function(req, res) {
+  // Create a new pet in db
   // Takes an object called createPet attached to req.body with all fields
   // necessary to create a Pet doc
 
@@ -47,5 +48,13 @@ petsRoute.post('/pets', jsonParser, function(req, res) {
     // Send success message to client
     res.json({'msg': 'success'});
   });
+
+petsRoute.delete('/pets/:id', function(req, res) {
+  // Deletes a specific pet from the db
+  Pet.findOneAndRemove({_id: req.params.id}, function(err, doc) {
+    if(err) handleError(err);
+    res.json({'msg': 'success'});
+  });
+});
 
 });

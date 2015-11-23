@@ -16,6 +16,19 @@ petsRoute.get('/pets', function(req, res) {
   });
 });
 
+petsRoute.get('/pets/:id', function(req, res) {
+  // Find a specific pet
+
+  // Even though we ever only want one result, we use find() over findOne()
+  // so that the return value will be an array just like the /pets route.
+  // That way we can use the same code and styling on the front end whether
+  // people are searching for one specific pet, or all pets.
+  Pet.find({_id: req.params.id}, function(err, docs) {
+    if(err) handleError(err, res);
+    res.json({pets: docs});
+  });
+});
+
 petsRoute.post('/pets', jsonParser, function(req, res) {
   // Takes an object called createPet attached to req.body with all fields
   // necessary to create a Pet doc

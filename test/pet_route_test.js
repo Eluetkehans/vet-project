@@ -17,6 +17,12 @@ var url = 'localhost:3000/api';
 require(__dirname + '/../server');
 
 describe('Pet routes', function() {
+  // Because we make a new Pet to search every time we run a test session
+  // we need a spot to save the semi-randomly generated _id to use later
+  // in searches.
+
+  var searchId;
+
   before(function(done) {
     //add pet objects into our database for our test to interact with
     var searchPet = new Pet();
@@ -27,6 +33,8 @@ describe('Pet routes', function() {
     searchPet.color = 'pink';
     searchPet.save(function(err, doc) {
       if (err) throw err;
+      // set what id to search for before the tests are run.
+      searchId = doc._id;
       done();
     });
   });
@@ -72,4 +80,15 @@ describe('Pet routes', function() {
         });
       });
   });
+
+  it('should be able to search for a pet by id', function(done) {
+    chai.request(url)
+      .get('/pets/' + searchId)
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        expect(res.body.pets[0].name).to.eql('fluffy, destroyer of worlds');
+        done();
+      });
+  });
+
 });

@@ -49,4 +49,27 @@ describe('Pet routes', function() {
         done();
       });
   });
+  it('should be able to add a new pet into the db', function(done) {
+    var createPet = {
+                     "createPet": {
+                                   "name": "Mittens, the despoiler",
+                                   "type": "dog",
+                                   "size": "small",
+                                   "gender": "female",
+                                   "color": "sable"
+                                  }
+                    };
+    chai.request(url)
+      .post('/pets')
+      .send(createPet)
+      .end(function(err, res) {
+        expect(err).to.eql(null);
+        // find first result. Returns single doc, not array of docs.
+        Pet.findOne({"name": "Mittens, the despoiler"}, function(err, doc) {
+          if(err) throw err;
+          expect(doc.name).to.eql("Mittens, the despoiler");
+          done();
+        });
+      });
+  });
 });

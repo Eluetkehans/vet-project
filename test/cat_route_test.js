@@ -84,7 +84,7 @@ describe('Cat Api', function() {
 // We could chain all the size tests in one test, but it would create a
 // pyramid of doom situation. We will do them seperately to keep the code
 // cleaner.
-  it('should return a list of cats small cats', function(done) {
+  it('should return a list of small cats', function(done) {
     chai.request(url)
       .get('/cats/small')
       .end(function(err, res) {
@@ -94,7 +94,7 @@ describe('Cat Api', function() {
       });
   });
 
-  it('should return a list of cats medium cats', function(done) {
+  it('should return a list of medium cats', function(done) {
     chai.request(url)
       .get('/cats/medium')
       .end(function(err, res) {
@@ -104,7 +104,7 @@ describe('Cat Api', function() {
       });
   });
 
-  it('should return a list of cats large cats and no dogs', function(done) {
+  it('should return a list of large cats and no dogs', function(done) {
     chai.request(url)
       .get('/cats/large')
       .end(function(err, res) {

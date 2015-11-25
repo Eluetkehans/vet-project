@@ -19,11 +19,15 @@
   "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
+    "mongodb": "^2.0.43",
     "mongoose": "^4.2.7"
   },
   "devDependencies": {
+    "angular": "^1.4.6",
     "chai": "^3.4.1",
     "chai-http": "^1.0.0",
-    "mocha": "^2.3.4"
+    "gulp": "^3.9.0",
+    "mocha": "^2.3.4",
+    "webpack-stream": "^2.1.1"
   }
 }

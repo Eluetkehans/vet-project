@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vet Project</title>
+</head>
+
+<!-- data tag in front of angular tags adds compatibility for screen readers
+and improves the symantic score for google search priority -->
+
+<body data-ng-app="vetApp">
+  <main data-ng-controller="petsController" data-ng-init="getAll()">
+    <h1>Welcome to the pet inventory.</h1>
+    <table dat-ng-init="tableInit()">
+      <tr>
+        <th data-ng-repeat="heading in headings"
+            data-ng-click="tableSort(heading)">{{heading}}</th>
+      </tr>
+      <tr data-ng-repeat="row in rows">
+        <td data-ng-repeat="item in row">{{item}}</td>
+      </tr>
+    </table>
+  </main>
+  <script src="bundle.js"></script>
+</body>
+</html>

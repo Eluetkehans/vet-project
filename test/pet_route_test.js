@@ -153,8 +153,8 @@ describe('Pet routes', function() {
       .end(function(err, res) {
         Pet.findOne({_id: updateId}, function(err, doc) {
           expect(err).to.eql(null);
-          expect(doc.color).to.eql("blac");
-          expect(doc.size).to.eql("mediu");
+          expect(doc.color).to.eql("black");
+          expect(doc.size).to.eql("medium");
           done();
         });
       });

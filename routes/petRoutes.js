@@ -48,6 +48,7 @@ petsRoute.post('/pets', jsonParser, function(req, res) {
     // Send success message to client
     res.json({'msg': 'success'});
   });
+});
 
 petsRoute.delete('/pets/:id', function(req, res) {
   // Deletes a specific pet from the db
@@ -57,4 +58,12 @@ petsRoute.delete('/pets/:id', function(req, res) {
   });
 });
 
+petsRoute.put('/pets/:id', jsonParser, function(req, res) {
+  // Updates a specific pet in the db
+  // Takes an updateData object on req.body with the key value pairs being
+  // altered.
+  Pet.findOneAndUpdate({_id: req.params.id}, req.body.updateData, function(err, doc) {
+    if(err) handleError(err, res);
+    res.json({'msg': 'success'});
+  });
 });

@@ -80,5 +80,40 @@ describe('Cat Api', function() {
       done();
     });
   });
-  
+
+// We could chain all the size tests in one test, but it would create a
+// pyramid of doom situation. We will do them seperately to keep the code
+// cleaner.
+  it('should return a list of cats small cats', function(done) {
+    chai.request(url)
+      .get('/cats/small')
+      .end(function(err, res) {
+        if(err) throw err;
+        expect(res.body.cats[0].name).to.eql('fluffy, destroyer of worlds');
+        done();
+      });
+  });
+
+  it('should return a list of cats medium cats', function(done) {
+    chai.request(url)
+      .get('/cats/medium')
+      .end(function(err, res) {
+        if(err) throw err;
+        expect(res.body.cats[0].name).to.eql('Pickles, the seathing mass');
+        done();
+      });
+  });
+
+  it('should return a list of cats large cats and no dogs', function(done) {
+    chai.request(url)
+      .get('/cats/large')
+      .end(function(err, res) {
+        if(err) throw err;
+        expect(res.body.cats[0].name).to.eql('Humphrey, keeper of secrets');
+        // and check the dog wasn't included
+        expect(res.body.cats.length).to.eql(1);
+        done();
+      });
+  });
+
 });

@@ -19,6 +19,18 @@ module.exports = function(app) {
         });
     };
 
+    // Add a pet to db
+    $scope.addPet = function(pet) {
+      $http.post('/api/pets')
+        .then(function(res) {
+          // Success case: and new pet to pets list
+          $scope.pets.push(pet);
+        }, function(res) {
+          // Failure case: console out the res so we can see what went wrong.
+          console.log(res);
+        });
+    };
+
     // Fills the table rows and headings based of of what is in pets
     $scope.tableInit = function() {
         // Finds the fields of our tables dynamicly in case we decide to

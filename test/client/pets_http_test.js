@@ -41,5 +41,12 @@ describe('pets controller', function() {
       expect($scope.pets[0].name).toBe('fluffy');
     });
 
+    it('should be able to send a pet to be added to db', function() {
+      $httpBackend.expectPOST('/api/pets').respond(200, {msg: 'success'});
+      $scope.addPet({name: 'fluffy'});
+      $httpBackend.flush();
+      expect($scope.pets[0].name).toBe('fluffy');
+    });
+
   });
 });

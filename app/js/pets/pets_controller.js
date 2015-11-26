@@ -12,7 +12,7 @@ module.exports = function(app) {
       $http.get('/api/pets')
         .then(function(res) {
           // Success case: put search data into $scope.pets
-          $scope.pets = res.body.pets;
+          $scope.pets = res.data;
         }, function(res) {
           // Failure case: console out the res so we can see what went wrong.
           console.log(res);

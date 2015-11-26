@@ -22,4 +22,24 @@ describe('pets controller', function() {
     expect(Array.isArray($scope.pets)).toBe(true);
   });
 
+  describe('REST requests', function() {
+    beforeEach(angular.mock.inject(function(_$httpBackend_, $rootScope) {
+      $httpBackend = _$httpBackend_;
+      $scope = $rootScope.$new();
+      $ControllerConstructor('petsController', {$scope: $scope});
+    }));
+
+    afterEach(function() {
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('should make a get requests when getAll() is called.', function() {
+      $httpBackend.expectGET('/api/pets').respond(200, [{name: 'fluffy'}]);
+      $scope.getAll();
+      $httpBackend.flush();
+      expect($scope.pets[0].name).toBe('fluffy');
+    });
+
+  });
 });

@@ -1,7 +1,7 @@
 module.exports = function(app) {
   // create our controller and use it. Dependencies are put in the array
   // to protect them from minification or uglification.
-  app.controller('PetsController', ['$scope', '$http', function($scope, $http) {
+  app.controller('petsController', ['$scope', '$http', function($scope, $http) {
 
     $scope.pets = [];
     $scope.headings = [];

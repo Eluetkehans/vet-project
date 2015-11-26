@@ -27,7 +27,7 @@ gulp.task('webpack:test', function() {
 // feed our webpack test build into karma
 gulp.task('karmatests', ['webpack:test'], function(done) {
   new Karma({
-    configFile: __dirname + '/karma.config.js'
+    configFile: __dirname + '/karma.conf.js'
   }, done).start();
 });
 

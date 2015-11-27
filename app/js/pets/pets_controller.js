@@ -61,7 +61,7 @@ module.exports = function(app) {
     };
 
     $scope.updatePet = function(pet) {
-      $http.put('/api/pets/' + pet._id, pet)
+      $http.put('/api/pets/' + pet._id, {updateData: pet})
         .then(function(res) {
           // Success case: replace pet from the pet list at its index
           $scope.pets.forEach(function(oldPet, index) {

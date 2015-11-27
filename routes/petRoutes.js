@@ -62,7 +62,16 @@ petsRoute.put('/pets/:id', jsonParser, function(req, res) {
   // Updates a specific pet in the db
   // Takes an updateData object on req.body with the key value pairs being
   // altered.
-  Pet.findOneAndUpdate({_id: req.params.id}, req.body.updateData, function(err, doc) {
+  
+  // Mongo _ids can not be updated, so we need to make an object without
+  // the _id.
+  var updateObj = {};
+  updateObj.name = req.body.updateData.name;
+  updateObj.gender = req.body.updateData.gender;
+  updateObj.size = req.body.updateData.size;
+  updateObj.color = req.body.updateData.color;
+  updateObj.type = req.body.updateData.type;
+  Pet.findOneAndUpdate({_id: req.params.id}, updateObj, function(err, doc) {
     if(err) handleError(err, res);
     res.json({'msg': 'success'});
   });

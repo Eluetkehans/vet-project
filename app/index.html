@@ -41,15 +41,48 @@ and improves the symantic score for google search priority -->
       </form>
     </section>
     <p data-ng-if="!pets">No pets in data base</p>
-    <table data-ng-if="pets">
-      <tr>
-        <th data-ng-repeat="heading in headings"
-            data-ng-click="tableSort(heading)">{{heading}}</th>
-      </tr>
-      <tr data-ng-repeat="row in rows">
-        <td data-ng-repeat="item in row">{{item}}</td>
-      </tr>
-    </table>
+    <ul id="petlist">
+      <li class="{{pet.status}}" data-ng-repeat="pet in pets">
+        <span data-ng-if="!pet.editing">
+          Name: {{pet.name}} Type: {{pet.type}} Size: {{pet.size}} 
+          Gender: {{pet.gender}} Pet: {{pet.color}}
+          <button data-ng-click="pet.editing = true">
+            Edit
+          </button>
+          <button data-ng-click="removePet(pet._id)">Delete</button>
+        </span>
+        <form data-ng-if="pet.editing" name="{{'petForm' + pet._id}}"
+          data-ng-submit="updatePet(pet)">
+          <label for="petName">Pet Name:
+            <input type="text" required data-ng-model="pet.name">
+            <br>
+          </label>
+          <label for="petType">Pet Type:
+            <input type="radio" value="dog" data-ng-model="pet.type">Dog
+            <input type="radio" value="cat" data-ng-model="pet.type">Cat
+            <br>
+          </label>
+          <label for="petSize">Pet Size:
+            <input type="radio" value="small" data-ng-model="pet.size">Small
+            <input type="radio" value="medium" data-ng-model="pet.size">Medium
+            <input type="radio" value="large" data-ng-model="pet.size">Large
+            <br>
+          </label>
+          <label for="petGender">Pet Gender:
+            <input type="radio" value="male" data-ng-model="pet.gender">Male
+            <input type="radio" value="female" data-ng-model="pet.gender">Female
+            <br>
+          </label>
+          <label for="petColor">Pet Color:
+            <input type="text" required data-ng-model="pet.color">
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+        <button data-ng-if="pet.editing" data-ng-click="pet.editing = false">
+          X
+        </button>
+      </li>
+    </ul>
   </main>
   <script src="bundle.js"></script>
 </body>

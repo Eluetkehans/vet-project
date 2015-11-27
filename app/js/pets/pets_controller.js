@@ -39,7 +39,6 @@ module.exports = function(app) {
         .then(function(res) {
           // Success case: and new pet to pets list
           $scope.pets.push(pet);
-        
         }, function(res) {
           // Failure case: console out the res so we can see what went wrong.
           console.log(res);

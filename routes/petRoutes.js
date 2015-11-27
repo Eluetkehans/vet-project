@@ -53,7 +53,7 @@ petsRoute.post('/pets', jsonParser, function(req, res) {
 petsRoute.delete('/pets/:id', function(req, res) {
   // Deletes a specific pet from the db
   Pet.findOneAndRemove({_id: req.params.id}, function(err, doc) {
-    if(err) handleError(err);
+    if(err) handleError(err, res);
     res.json({'msg': 'success'});
   });
 });

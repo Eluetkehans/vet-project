@@ -35,7 +35,7 @@ describe('pets controller', function() {
     });
 
     it('should make a get requests when getAll() is called.', function() {
-      $httpBackend.expectGET('/api/pets').respond(200, [{name: 'fluffy'}]);
+      $httpBackend.expectGET('/api/pets').respond(200, {pets: [{name: 'fluffy'}]});
       $scope.getAll();
       $httpBackend.flush();
       expect($scope.pets[0].name).toBe('fluffy');
@@ -46,6 +46,29 @@ describe('pets controller', function() {
       $scope.addPet({name: 'fluffy'});
       $httpBackend.flush();
       expect($scope.pets[0].name).toBe('fluffy');
+    });
+
+    it('should be able to get specific pet', function() {
+      $httpBackend.expectGET('/api/pets/1').respond(200, {pets: [{name: 'fluffy'}]});
+      $scope.findOnePet(1);
+      $httpBackend.flush();
+      expect($scope.pets[0].name).toBe('fluffy');
+    });
+
+    it('should be able to delete a specific pet', function() {
+      $scope.pets = [{name: 'fluffy', _id: 1}];
+      $httpBackend.expectDELETE('/api/pets/1').respond(200, {msg: 'success'});
+      $scope.removePet(1);
+      $httpBackend.flush();
+      expect($scope.pets.length).toBe(0);
+    });
+
+    it('should be able to update a specific pet', function() {
+      $scope.pets = [{name: 'fluffy', _id: 1}];
+      $httpBackend.expectPUT('/api/pets/1').respond(200, {msg: 'success'});
+      $scope.updatePet({name: 'noodles', _id: 1});
+      $httpBackend.flush();
+      expect($scope.pets[0].name).toBe('noodles');
     });
 
   });

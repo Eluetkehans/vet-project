@@ -41,11 +41,16 @@ and improves the symantic score for google search priority -->
       </form>
     </section>
     <p data-ng-if="!pets">No pets in data base</p>
+    <form>
+      <label>Search pet by Id</label>
+      <input type="text" data-ng-model="searchId">
+      <button data-ng-click="findOnePet(searchId)">Search</button>
+    </form>
     <ul id="petlist">
       <li class="{{pet.status}}" data-ng-repeat="pet in pets">
         <span data-ng-if="!pet.editing">
           Name: {{pet.name}} Type: {{pet.type}} Size: {{pet.size}} 
-          Gender: {{pet.gender}} Color: {{pet.color}}
+          Gender: {{pet.gender}} Color: {{pet.color}} Id: {{pet._id}}
           <button data-ng-click="pet.editing = true">
             Edit
           </button>
